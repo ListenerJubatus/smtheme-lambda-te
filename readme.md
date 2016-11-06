@@ -17,3 +17,6 @@ The main fonts are Overpass. <http://overpassfont.org/> and the condensed weight
 License
 -----------
 As it incorporates existing code from StepMania, and is intended to possibly be part of the main distribution, fiftyOne is licensed under the terms of the MIT License. 
+
+Menu music is The Frequency by Ars Sonor, CC-BY-4.0
+obtained from http://freemusicarchive.org/music/Ars_Sonor/Tabea
