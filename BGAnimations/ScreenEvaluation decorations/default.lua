@@ -1,8 +1,7 @@
 -- ...So I realize that I completely ignored almost each and every
 -- metrics-bound element this screen could use, but it's okay, right?
 
-local t = Def.ActorFrame{}
-
+local t = LoadFallbackB()
 -- A very useful table...
 local eval_lines = {
 	"W1",
