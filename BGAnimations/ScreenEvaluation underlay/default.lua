@@ -57,12 +57,17 @@ local mid_pane = Def.ActorFrame {
 			else
 				self:Load(THEME:GetPathG("Common fallback", "banner"))
 			end
-			self:scaletoclipped(256,80):x(_screen.cx):y(_screen.cy-127):zoom(0.8)
-		end
+			self:scaletoclipped(256,80):x(_screen.cx):y(_screen.cy-127)
+		end;
+		OnCommand=cmd(zoom,0.7;diffusealpha,0;sleep,0.3;decelerate,0.3;diffusealpha,1;zoom,0.8);
+		OffCommand=cmd(decelerate,0.3;diffusealpha,0;zoom,0.8);
 	},
 	-- Banner frame.
 	LoadActor("_bannerframe") .. {
-		InitCommand=cmd(x,_screen.cx;y,_screen.cy-127;zoom,0.8;)
+		InitCommand=cmd(x,_screen.cx;y,_screen.cy-127;);
+		OnCommand=cmd(zoom,0.7;diffusealpha,0;sleep,0.3;decelerate,0.3;diffusealpha,1;zoom,0.8);
+		OffCommand=cmd(decelerate,0.3;diffusealpha,0;zoom,0.75);
+
 	}
 }
 
@@ -154,32 +159,42 @@ for ip, p in ipairs(GAMESTATE:GetHumanPlayers()) do
 	-- Primary score.
 	eval_parts[#eval_parts+1] = Def.BitmapText {
 		Font = "Common normal",
-		InitCommand=cmd(x,_screen.cx + (grade_parts_offs * 0.72);y,(_screen.cy*1.583);diffuse,ColorMidTone(PlayerColor(p));zoom,1;shadowlength,1),
+		InitCommand=cmd(x,_screen.cx + (grade_parts_offs * 0.8);y,(_screen.cy-27);diffuse,PlayerColor(p);zoom,1;shadowlength,1),
 		OnCommand=function(self)
 			self:settext(GetPlScore(p, "primary")):horizalign(center)
-			self:diffusealpha(0):sleep(0.3):decelerate(0.4):diffusealpha(1)
-		end
+			self:diffusealpha(0):sleep(0.9):decelerate(0.4):diffusealpha(1)
+		end;
+		OffCommand=cmd(decelerate,0.3;diffusealpha,0;);
 	}
 	-- Secondary score.
 	eval_parts[#eval_parts+1] = Def.BitmapText {
 		Font = "Common normal",
-		InitCommand=cmd(x,_screen.cx + (grade_parts_offs * 0.72);y,(_screen.cy*1.583)+23;diffuse,ColorMidTone(PlayerColor(p));zoom,0.75;shadowlength,1),
+		InitCommand=cmd(x,_screen.cx + (grade_parts_offs * 0.8);y,(_screen.cy-27)+23;diffuse,ColorMidTone(PlayerColor(p));zoom,0.75;shadowlength,1),
 		OnCommand=function(self)
 			self:settext(GetPlScore(p, "secondary")):horizalign(center)
-			self:diffusealpha(0):sleep(0.3):decelerate(0.4):diffusealpha(1)
-		end
+			self:diffusealpha(0):sleep(0.9):decelerate(0.4):diffusealpha(1)
+		end;
+		OffCommand=cmd(sleep,0.1;decelerate,0.3;diffusealpha,0;);
 	}
 	
 	-- Letter grade and associated parts.
 	eval_parts[#eval_parts+1] = Def.ActorFrame{
 		InitCommand=cmd(x,_screen.cx + (grade_parts_offs * 0.8);y,_screen.cy/1.91),
-		OnCommand=cmd(diffusealpha,0;zoom,0.75;sleep,0.63;decelerate,0.3;zoom,1;diffusealpha,1),
+		OnCommand=cmd(diffusealpha,0;zoom,0.75;sleep,0.9;decelerate,0.4;zoom,1;diffusealpha,1),
+		OffCommand=cmd(decelerate,0.3;diffusealpha,0;zoom,0.75);
 		Def.Quad {
 			InitCommand=cmd(zoomto,160,90;diffuse,color("#394D91");diffusealpha,0.4);
 		},
 		
 		LoadActor(THEME:GetPathG("GradeDisplay", "Grade " .. p_grade)) .. {
-			InitCommand=cmd(zoom,0.5;addy,-6);
+			InitCommand=cmd(zoom,0.5;);
+			OnCommand=function(self)
+			        if STATSMAN:GetCurStageStats():GetPlayerStageStats(p):GetStageAward() then
+					  self:sleep(1.3):smooth(0.4):addy(-6);
+					else
+					  self:addy(0);
+					end;
+			end;
 		},
 		
 		Def.BitmapText {
@@ -188,7 +203,7 @@ for ip, p in ipairs(GAMESTATE:GetHumanPlayers()) do
 			OnCommand=function(self)
 				if STATSMAN:GetCurStageStats():GetPlayerStageStats(p):GetStageAward() then
 					self:settext(THEME:GetString( "StageAward", ToEnumShortString(STATSMAN:GetCurStageStats():GetPlayerStageStats(p):GetStageAward()) ))
-					self:diffusealpha(0):zoomx(0.4):sleep(0.63):decelerate(0.4):zoomx(0.6):diffusealpha(1)
+					self:diffusealpha(0):zoomx(0.4):sleep(1.3):decelerate(0.4):zoomx(0.6):diffusealpha(1)
 				end
 			end
 		}
@@ -201,10 +216,11 @@ t[#t+1] = eval_parts
 -- todo: replace.
 if GAMESTATE:IsHumanPlayer(PLAYER_1) == true then
 	if GAMESTATE:IsCourseMode() == false then
+	local grade_parts_offs = -270
 	-- Difficulty banner
 	t[#t+1] = Def.ActorFrame {
-	  InitCommand=cmd(x,_screen.cx -214;y,_screen.cy-52;zoom,1;visible,not GAMESTATE:IsCourseMode(););
-	  OnCommand=cmd(diffusealpha,0;zoom,0.5;sleep,0.63;decelerate,0.3;zoom,0.8;diffusealpha,1);
+	  InitCommand=cmd(x,_screen.cx + (grade_parts_offs * 0.8);y,_screen.cy-52;zoom,1;visible,not GAMESTATE:IsCourseMode(););
+	  OnCommand=cmd(diffusealpha,0;zoom,0.5;sleep,0.9;decelerate,0.3;zoom,0.8;diffusealpha,1);
 	  OffCommand=cmd(decelerate,0.3;diffusealpha,0;);
 	 
 	 LoadActor(THEME:GetPathG("StepsDisplayListRow", "frame")) .. {
@@ -265,10 +281,11 @@ end;
 if GAMESTATE:IsHumanPlayer(PLAYER_2) == true then
 
 	if GAMESTATE:IsCourseMode() == false then
+	local grade_parts_offs = 270
 	-- Difficulty banner
 	t[#t+1] = Def.ActorFrame {
-	  	  InitCommand=cmd(x,_screen.cx+214;y,_screen.cy-52;zoom,1;visible,not GAMESTATE:IsCourseMode(););
-	  OnCommand=cmd(diffusealpha,0;zoom,0.5;sleep,0.63;decelerate,0.3;zoom,0.8;diffusealpha,1);
+	  	  InitCommand=cmd(x,_screen.cx + (grade_parts_offs * 0.8);y,_screen.cy-52;zoom,1;visible,not GAMESTATE:IsCourseMode(););
+	  OnCommand=cmd(diffusealpha,0;zoom,0.5;sleep,0.9;decelerate,0.3;zoom,0.8;diffusealpha,1);
 	  OffCommand=cmd(decelerate,0.3;diffusealpha,0;);
 	 
 	 LoadActor(THEME:GetPathG("StepsDisplayListRow", "frame")) .. {
