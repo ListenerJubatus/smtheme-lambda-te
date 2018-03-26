@@ -1,5 +1,5 @@
-local menu_height= 290
-local menu_width= 180
+local menu_height= 400
+local menu_width= 250
 local menu_x= {
 	[PLAYER_1]= _screen.w * .25,
 	[PLAYER_2]= _screen.w * .75,
@@ -77,21 +77,22 @@ local life_options= {
 	nesty_options.enum_player_mod_single_val("fail_immediate_continue", "FailType_ImmediateContinue", "FailSetting"),
 	nesty_options.enum_player_mod_single_val("fail_end_of_song", "FailType_EndOfSong", "FailSetting"),
 	nesty_options.enum_player_mod_single_val("fail_off", "FailType_Off", "FailSetting"),
-	nesty_options.float_player_mod_val("BatteryLives", 0, 0, 0, 1, 10, 4),
+	nesty_options.float_player_mod_val_new("BatteryLives", 1, 2, 1, 10, 4),
 }
 
+-- I suppose now would be a good time to mention that, since the float menu code ...thingy doesn't rely on powers of 10 anymore,
+-- the values passed in will be different.
 local base_options= {
-	notefield_prefs_speed_mod_menu(),
 	notefield_prefs_speed_type_menu(),
-	nesty_options.float_song_mod_val("MusicRate", -2, -1, -1, .5, 2, 1),
+	notefield_prefs_speed_mod_menu(),
+	--Turns out the music rate can't handle values higher than 3!
+	nesty_options.float_song_mod_val_new("MusicRate", 0.1, 1, .1, 3, 1),
 	nesty_options.float_song_mod_toggle_val("Haste", 1, 0),
 	notefield_perspective_menu(),
 	nesty_options.float_config_toggle_val(notefield_prefs_config, "reverse", -1, 1),
-	nesty_options.float_config_val(notefield_prefs_config, "zoom", -2, -1, 0),
+	nesty_options.float_config_val_new(notefield_prefs_config, "zoom", 0.1, 1),
 	nesty_options.submenu("chart_mods", chart_mods),
 	{name= "noteskin", translatable= true, menu= nesty_option_menus.noteskins},
-	{name= "noteskin_params", translatable= true, menu= nesty_option_menus.menu,
-	 args= gen_noteskin_param_menu, req_func= show_noteskin_param_menu},
 	{name= "shown_noteskins", translatable= true, menu= nesty_option_menus.shown_noteskins, args= {}},
 	nesty_options.bool_config_val(notefield_prefs_config, "hidden"),
 	nesty_options.bool_config_val(notefield_prefs_config, "sudden"),
@@ -102,7 +103,7 @@ local base_options= {
 	nesty_options.bool_song_mod_val("AssistMetronome"),
 	nesty_options.bool_song_mod_val("StaticBackground"),
 	nesty_options.bool_song_mod_val("RandomBGOnly"),
-	nesty_options.float_config_val(player_config, "ScreenFilter", -2, -1, 0),
+	nesty_options.float_config_val_new(player_config, "ScreenFilter", 0.1, 0.5, 0, 1),
 	get_notefield_mods_toggle_menu(true, true),
 	{name= "reload_noteskins", translatable= true, type= "action",
 	 execute= function() NOTESKIN:reload_skins() end},
@@ -166,21 +167,31 @@ local frame= Def.ActorFrame{
 		end
 	end,
 }
+
 local item_params= {
 	text_commands= {
-		Font= "Common Normal", OnCommand= function(self)
-			self:diffusealpha(0):linear(1):diffusealpha(1)
+		Font= "Common Condensed", OnCommand= function(self)
+			self:diffuse(color("#3D1D23")):diffusealpha(0):decelerate(0.2):diffusealpha(1)
+		end,
+		OffCommand=function(self)
+			self:smooth(0.3):diffusealpha(0)
 		end,
 	},
 	text_width= .7,
 	value_text_commands= {
-		Font= "Common Normal", OnCommand= function(self)
-			self:diffusealpha(0):linear(1):diffusealpha(1)
+		Font= "Common Condensed", OnCommand= function(self)
+			self:diffuse(color("#AC214A")):diffusealpha(0):decelerate(0.2):diffusealpha(1)
+		end,
+		OffCommand=function(self)
+			self:smooth(0.3):diffusealpha(0)
 		end,
 	},
 	value_image_commands= {
 		OnCommand= function(self)
-			self:diffusealpha(0):linear(1):diffusealpha(1)
+			self:diffusealpha(0):smooth(0.3):diffusealpha(1)
+		end,
+		OffCommand=function(self)
+			self:smooth(0.3):diffusealpha(0)
 		end,
 	},
 	value_width= .25,
@@ -190,45 +201,50 @@ local item_params= {
 		menu= THEME:GetPathG("", "menu_icons/menu"),
 	},
 }
+
 for pn, menu in pairs(menus) do
 	frame[#frame+1]= LoadActor(
 		THEME:GetPathG("ScreenOptions", "halfpage")) .. {
 		InitCommand= function(self)
-			self:xy(menu_x[pn], 250)
-		end,
+			self:xy(menu_x[pn], 360)
+		end;
 		OnCommand=function(self)
-			self:diffusealpha(0):zoomy(0.75):decelerate(0.3):diffusealpha(1):zoomy(1)
-		end,
+			self:diffusealpha(0):zoomx(0.8):decelerate(0.3):diffusealpha(1):zoomx(1)
+		end;
 		OffCommand=function(self)
 			self:decelerate(0.3):diffusealpha(0)
-		end
+		end;
 	}
 	frame[#frame+1]= menu:create_actors{
-		x= menu_x[pn], y= 96, width= menu_width, height= menu_height,
+		x= menu_x[pn], y= 120, width= menu_width, height= menu_height,
 		translation_section= "notefield_options",
-		num_displays= 1, pn= pn, el_height= 24,
+		num_displays= 1, pn= pn, el_height= 36,
 		menu_sounds= {
 			pop= THEME:GetPathS("Common", "Cancel"),
 			push= THEME:GetPathS("_common", "row"),
-			act= THEME:GetPathS("Common", "value"),
-			move= THEME:GetPathS("_switch", "down"),
-			move_up= THEME:GetPathS("_switch", "up"),
-			move_down= THEME:GetPathS("_switch", "down"),
+			act= THEME:GetPathS("Common", "start"),
+			move= THEME:GetPathS("Common", "value"),
+			move_up= THEME:GetPathS("Common", "value"),
+			move_down= THEME:GetPathS("Common", "value"),
 			inc= THEME:GetPathS("_switch", "up"),
 			dec= THEME:GetPathS("_switch", "down"),
 		},
 		display_params= {
-			el_zoom= .55, item_params= item_params, item_mt= nesty_items.value,
+			el_zoom= 0.8, item_params= item_params, item_mt= nesty_items.value, heading_height = 48,
 			on= function(self)
-				self:zoomy(0):decelerate(0.3):zoomy(1)
-			end},
+				self:diffusealpha(0):decelerate(0.2):diffusealpha(1)
+			end,
+			off= function(self)
+				self:decelerate(0.2):diffusealpha(0)
+			end,	
+			},
 	}
 	frame[#frame+1]= Def.BitmapText{
 		Font= "Common Normal", InitCommand= function(self)
 			explanations[pn]= self
-			self:xy(menu_x[pn] - (menu_width / 2) -6, _screen.cy+136)
-				:diffuse(ColorLightTone((PlayerColor(pn)))):horizalign(left):vertalign(top)		
-				:wrapwidthpixels(menu_width / .46):zoom(.5)
+			self:xy(menu_x[pn] - (menu_width / 2), _screen.cy+154)
+				:diffuse(ColorDarkTone((PlayerColor(pn)))):horizalign(left):vertalign(top)		
+				:wrapwidthpixels(menu_width / .8):zoom(.75)
 				:horizalign(left)
 		end,
 		change_explanationCommand= function(self, param)
@@ -243,9 +259,9 @@ for pn, menu in pairs(menus) do
 		end,
 	}
 	frame[#frame+1]= Def.BitmapText{
-		Font= "Common Normal", Text= "READY!", InitCommand= function(self)
+		Font= "Common Condensed", Text= "READY!", InitCommand= function(self)
 			ready_indicators[pn]= self
-			self:xy(menu_x[pn], 106):zoom(1.5):diffuse(Color.Green):diffusealpha(0)
+			self:xy(menu_x[pn], 146):zoom(1.5):diffuse(Color.Green):strokecolor(color("#2E540F")):diffusealpha(0)
 		end,
 		show_readyCommand= function(self)
 			self:stoptweening():decelerate(.5):diffusealpha(1)

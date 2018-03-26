@@ -2,21 +2,16 @@ local t = Def.ActorFrame {};
 
 t[#t+1] = Def.ActorFrame {
 	Def.Quad {
-		InitCommand=cmd(vertalign,bottom;zoomto,SCREEN_WIDTH,5;addy,-36;diffuse,Color("Black");fadetop,1;diffusealpha,0.8);
+		InitCommand=cmd(vertalign,bottom;zoomto,SCREEN_WIDTH,5;addy,-50;diffuse,Color("Black");fadetop,1;diffusealpha,0.3);
 	};
 };
 
 t[#t+1] = Def.ActorFrame {
 	Def.Quad {
-		InitCommand=cmd(vertalign,bottom;zoomto,SCREEN_WIDTH,36;);
+		InitCommand=cmd(vertalign,bottom;zoomto,SCREEN_WIDTH,50;);
 		OnCommand=function(self)
-		self:diffuse(color("#000000")):diffusealpha(0.95)
-		end;
-	};
-	Def.Quad {
-		InitCommand=cmd(vertalign,bottom;zoomto,SCREEN_WIDTH,36;fadeleft,0.6;faderight,0.6;);
-		OnCommand=function(self)
-		self:diffuse(color("#000000")):diffusetopedge(color("#181924")):diffusealpha(0.95)
+		self:diffuse(ColorMidTone(ScreenColor(SCREENMAN:GetTopScreen():GetName())))
+		self:diffusetopedge(ColorDarkTone(ScreenColor(SCREENMAN:GetTopScreen():GetName()))):diffusealpha(1)
 		end;
 	};
 };

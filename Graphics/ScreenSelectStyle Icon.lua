@@ -7,20 +7,21 @@ local icon_color2 = color("#F0BA00");
 
 local t = Def.ActorFrame {};
 t[#t+1] = Def.ActorFrame { 
-	GainFocusCommand=cmd(stoptweening;bob;effectmagnitude,0,0,3;decelerate,0.1;zoom,1;diffusealpha,1;);
-	LoseFocusCommand=cmd(stoptweening;stopeffect;decelerate,0.1;zoom,0.85;diffusealpha,0.5);
-	OffCommand=cmd(decelerate,0.2;zoom,0.7;diffusealpha,0;);
+	GainFocusCommand=THEME:GetMetric(Var "LoadingScreen","IconGainFocusCommand");
+	LoseFocusCommand=THEME:GetMetric(Var "LoadingScreen","IconLoseFocusCommand");
 
-	LoadActor(THEME:GetPathG("_style", "base"))..{
+	LoadActor(THEME:GetPathG("ScreenSelectPlayMode", "icon/_background base"))..{
+		GainFocusCommand=cmd(diffuse,color("#981F41"););
+		LoseFocusCommand=cmd(diffuse,color("#740A27"););
 	};
 	LoadFont("_overpass 36px")..{
 		Text=string.upper(string_name);
 		InitCommand=cmd(y,-12;maxwidth,232);
-		OnCommand=cmd(diffuse,Color.White);
+		OnCommand=cmd(diffuse,icon_color);
 	};
-	LoadFont("Common normal")..{
+	LoadFont("Common Italic Condensed")..{
 		Text=string.upper(string_expl);
-		InitCommand=cmd(y,32;maxwidth,222);
+		InitCommand=cmd(y,29.5;maxwidth,128);
 	};
 
 	LoadActor(THEME:GetPathG("ScreenSelectPlayMode", "icon/_background base"))..{

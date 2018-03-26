@@ -1,15 +1,6 @@
-Branch.PlayerOptions= function()
-	local pm = GAMESTATE:GetPlayMode()
-	local restricted = { PlayMode_Oni= true, PlayMode_Rave= true,
-		--"PlayMode_Battle" -- ??
-	}
-	local optionsScreen = "ScreenNestyPlayerOptions"
-	if restricted[pm] then
-		optionsScreen = "ScreenNestyPlayerOptionsRestricted"
+Branch.OptionsEdit = function()
+	if SONGMAN:GetNumSongs() == 0 and SONGMAN:GetNumAdditionalSongs() == 0 then
+		return "ScreenHowToInstallSongs"
 	end
-	if SCREENMAN:GetTopScreen():GetGoToOptions() then
-		return optionsScreen
-	else
-		return "ScreenStageInformation"
-	end
+	return "ScreenEditMenu"
 end
