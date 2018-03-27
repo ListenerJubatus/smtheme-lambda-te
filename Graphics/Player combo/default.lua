@@ -98,14 +98,14 @@ local t = Def.ActorFrame {
 			c.Number:stopeffect();
 			(cmd(diffuse,color("#CFE5BC");diffusebottomedge,color("#94D658");strokecolor,color("#12530E");))(c.Label);
 		elseif param.Combo then
-			c.Number:diffuse(color("#FBE9DD"));
+			c.Number:diffuse(color("#D8DFF7"));
 -- 			c.Number:diffuse(PlayerColor(player));
 			c.Number:stopeffect();
-			(cmd(diffuse,color("#F5CB92");diffusebottomedge,color("#EFA97A");strokecolor,color("#602C1B");))(c.Label);
+			(cmd(diffuse,color("#D8DFF7");diffusebottomedge,color("#C4CDED");strokecolor,color("#101E4B");))(c.Label);
 		else
-			c.Number:diffuse(color("#FBE9DD"));
+			c.Number:diffuse(color("#D8DFF7"));
 			c.Number:stopeffect();
-			(cmd(diffuse,color("#F5CB92");diffusebottomedge,color("#EFA97A");strokecolor,color("#602C1B");))(c.Label);
+			(cmd(diffuse,color("#D8DFF7");diffusebottomedge,color("#C4CDED");strokecolor,color("#101E4B");))(c.Label);
 		end
 		-- Pulse
 		Pulse( c.Number, param );
