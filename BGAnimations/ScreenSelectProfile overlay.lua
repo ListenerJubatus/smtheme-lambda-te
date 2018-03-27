@@ -48,7 +48,7 @@ function LoadPlayerStuff(Player)
 	}; --]]
 	t[#t+1] = Def.ActorFrame {
 		Name = 'JoinFrame';
-		LoadCard(color('#882D47'));
+		LoadCard(color('#434DC4'));
 --[[ 		Def.Quad {
 			InitCommand=cmd(zoomto,200+4,230+4);
 			OnCommand=cmd(shadowlength,1;diffuse,color("0,0,0,0.5"));

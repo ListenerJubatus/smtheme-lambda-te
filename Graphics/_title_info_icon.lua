@@ -17,7 +17,7 @@ return Def.ActorFrame {
 	},
 	-- Label
 	LoadFont("_roboto condensed Bold 48px") .. {
-		InitCommand=cmd(x,50;zoom,0.35;diffuse,color("#512232");horizalign,left;uppercase,true),
+		InitCommand=cmd(x,50;zoom,0.35;diffuse,color("#5F6AE1");horizalign,left;uppercase,true),
 		OnCommand= function(self)
 			self:shadowlength(0):settext(params.label_text)
 		end,

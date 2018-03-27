@@ -35,7 +35,7 @@ ScreenColors = {
     Evaluation      = color("#434DC4"),
     Summary         = color("#434DC4"),
     StageInformation  = color("#D05722"),
-    Edit         = color("#B34754"),
+    Edit         = color("#434DC4"),
     Default         = color("#434DC4"),
 }
 
@@ -58,7 +58,7 @@ GameColor = {
         PLAYER_2 = color("#65110F"),
 		both = color("#F5E1E1"),
     },
-    Difficulty = {
+	Difficulty = {
         --[[ These are for 'Custom' Difficulty Ranks. It can be very  useful
         in some cases, especially to apply new colors for stuff you
         couldn't before. (huh? -aj) ]]
@@ -82,21 +82,21 @@ GameColor = {
         Difficulty_Routine  = color("#ff9a00")              -- orange
     },
     Stage = {
-        Stage_1st   = color("#F6C455"),
-        Stage_2nd   = color("#EDA858"),
-        Stage_3rd   = color("#E69259"),
-        Stage_4th   = color("#DD775B"),
-        Stage_5th   = color("#D55E5D"),
-        Stage_6th   = color("#CD445F"),
-        Stage_Next  = color("#73ff00"),
-        Stage_Final = color("#4BC6EB"),
-        Stage_Extra1    = color("#B60052"),
-        Stage_Extra2    = color("#FF499B"),
-        Stage_Nonstop   = color("#FFD782"),
-        Stage_Oni   = color("#FF714D"),
-        Stage_Endless   = color("#6040A7"),
-        Stage_Event = color("#9d324e"),
-        Stage_Demo  = color("#9d324e")
+        Stage_1st   = color("#3A44AF"),
+        Stage_2nd   = color("#3A44AF"),
+        Stage_3rd   = color("#3A44AF"),
+        Stage_4th   = color("#3A44AF"),
+        Stage_5th   = color("#3A44AF"),
+        Stage_6th   = color("#3A44AF"),
+        Stage_Next  = color("#3A44AF"),
+        Stage_Final = color("#3A44AF"),
+        Stage_Extra1    = color("#3A86AF"),
+        Stage_Extra2    = color("#AF3A3A"),
+        Stage_Nonstop   = color("#3A44AF"),
+        Stage_Oni   = color("#3A44AF"),
+        Stage_Endless   = color("#3A44AF"),
+        Stage_Event = color("#3A44AF"),
+        Stage_Demo  = color("#3A44AF")
     },
     Judgment = {
         JudgmentLine_W1     = color("#A0DBF1"),

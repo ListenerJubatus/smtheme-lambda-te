@@ -5,7 +5,7 @@ t[#t+1] = Def.ActorFrame {
   InitCommand=cmd(Center);
 	Def.Quad {
 		InitCommand=cmd(scaletoclipped,SCREEN_WIDTH,SCREEN_HEIGHT);
-		OnCommand=cmd(diffuse,ColorMidTone(color("#451A20"));diffusebottomedge,ColorMidTone(color("#5E2A30"));diffusealpha,0.9);
+		OnCommand=cmd(diffuse,color("#000000");diffusebottomedge,color("#171E67");diffusealpha,0.9);
 	};
 	LoadActor (GetSongBackground()) .. {
 		InitCommand=cmd(scaletoclipped,SCREEN_WIDTH,SCREEN_HEIGHT);

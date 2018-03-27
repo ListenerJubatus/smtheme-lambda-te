@@ -11,7 +11,7 @@ local t = Def.ActorFrame{
 				self:diffusebottomedge( color("#153F17") );
 				self:settext( Screen.String("Network OK") );
 			else
-				self:diffuse( color("#4F1B34") );
+				self:diffuse( color("#5F6AE1") );
 				self:settext( Screen.String("Offline") );
 			end;
 		end;
