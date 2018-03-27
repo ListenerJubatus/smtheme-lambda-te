@@ -221,7 +221,7 @@ for ip, p in ipairs(GAMESTATE:GetHumanPlayers()) do
 		
 		Def.BitmapText {
 			Font = "_roboto condensed 24px",
-			InitCommand=cmd(diffuse,Color.White;zoom,1;addy,38;maxwidth,160;uppercase,true;diffuse,ColorMidTone(PlayerColor(p));diffusetopedge,ColorMidTone(PlayerColor(p));shadowlength,1;),
+			InitCommand=cmd(diffuse,Color.White;zoom,1;addy,38;maxwidth,160;uppercase,true;diffuse,ColorLightTone(PlayerColor(p));diffusetopedge,color("#FFFFFF");shadowlength,1;),
 			OnCommand=function(self)
 				if STATSMAN:GetCurStageStats():GetPlayerStageStats(p):GetStageAward() then
 					self:settext(THEME:GetString( "StageAward", ToEnumShortString(STATSMAN:GetCurStageStats():GetPlayerStageStats(p):GetStageAward()) ))

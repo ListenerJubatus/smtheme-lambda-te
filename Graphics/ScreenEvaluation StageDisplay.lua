@@ -48,7 +48,7 @@ t[#t+1] = Def.ActorFrame {
 				end;
 			end;
 			-- StepMania is being stupid so we have to do this here;
-			self:diffuse(StageToColor(curStage)):diffusetopedge(ColorLightTone(StageToColor(curStage)));
+			self:diffuse(ColorLightTone(StageToColor(curStage)));
 			self:diffusealpha(0):smooth(0.3):diffusealpha(1);
 		end;
 	};
