@@ -2,8 +2,8 @@ local gc = Var("GameCommand");
 
 local string_name = gc:GetText();
 local string_expl = THEME:GetString("StyleType", gc:GetStyle():GetStyleType());
-local icon_color = color("#FFCB05");
-local icon_color2 = color("#F0BA00");
+local icon_color = color("#0e188c");
+local icon_color2 = color("#212ca5");
 
 local t = Def.ActorFrame {};
 t[#t+1] = Def.ActorFrame { 
@@ -11,8 +11,8 @@ t[#t+1] = Def.ActorFrame {
 	LoseFocusCommand=THEME:GetMetric(Var "LoadingScreen","IconLoseFocusCommand");
 
 	LoadActor(THEME:GetPathG("ScreenSelectPlayMode", "icon/_background base"))..{
-		GainFocusCommand=cmd(diffuse,color("#981F41"););
-		LoseFocusCommand=cmd(diffuse,color("#740A27"););
+		GainFocusCommand=cmd(diffuse,color("#DEE0F7"););
+		LoseFocusCommand=cmd(diffuse,color("#5F6AE1"););
 	};
 	LoadFont("_overpass 36px")..{
 		Text=string.upper(string_name);
@@ -21,7 +21,7 @@ t[#t+1] = Def.ActorFrame {
 	};
 	LoadFont("Common Italic Condensed")..{
 		Text=string.upper(string_expl);
-		InitCommand=cmd(y,29.5;maxwidth,128);
+		InitCommand=cmd(y,29.5;maxwidth,128;diffuse,color("#050d60"););
 	};
 
 	LoadActor(THEME:GetPathG("ScreenSelectPlayMode", "icon/_background base"))..{
